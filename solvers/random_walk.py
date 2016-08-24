@@ -5,11 +5,11 @@ import numpy as np
 from collections import Counter
 
 
-def solver_random_walk(self):
+def random_walk(game):
     trial = []
     n = 0
-    while trial != self.challenge:
-        trial = self.create_code()
+    while trial != game.challenge:
+        trial = game.create_code()
         #print(trial)
         n += 1
     return trial, n

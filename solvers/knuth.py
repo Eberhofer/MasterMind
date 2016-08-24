@@ -4,28 +4,29 @@ from functools import reduce
 import numpy as np
 from collections import Counter
 
-def solver_knuth(self):
+def knuth(game):
     """Run Knuth's 5-guess algorithm on the given secret.
-        from http://stackoverflow.com/questions/20298190/mastermind-minimax-algorithm
+        adapted from http://stackoverflow.com/questions/20298190/mastermind-minimax-algorithm
+        (see below for the code from stackoverflow)
     """
-    ALL_CODES = np.array([''.join(c) for c in self.create_solution_generator()])
-    assert(self.challenge in ALL_CODES)
+    ALL_CODES = np.array([''.join(c) for c in game.create_solution_generator()])
+    assert(game.challenge in ALL_CODES)
     codes = ALL_CODES
-    key = lambda g: max(Counter(self.evaluator(g, c) for c in codes).values())
-    guess = ''.join(''.join('a' for _ in range(int(len(self._slots) / 2))) + ''.join('b' for _ in range(int((len(self._slots) +1)/2))))
+    key = lambda g: max(Counter(game.evaluator(g, c) for c in codes).values())
+    guess = ''.join(''.join('a' for _ in range(int(len(game._slots) / 2))) + ''.join('b' for _ in range(int((len(game._slots) +1)/2))))
     n = 0
     while True:
         n += 1
-        feedback = self.evaluator(guess)
+        feedback = game.evaluator(guess)
         print("Guess {}: feedback {}".format(guess, feedback))
-        if guess == self.challenge:
+        if guess == game.challenge:
             break
-        codes = self.reduce_solution_set(codes, guess, feedback)
+        codes = game.reduce_solution_set(codes, guess, feedback)
         if len(codes) == 1:
             guess = codes[0]
         else:
             guess = min(ALL_CODES, key=key)
-    return [self._colordict[guess[i]] for i in self._slots], n
+    return [game._colordict[guess[i]] for i in game._slots], n
 
 
 

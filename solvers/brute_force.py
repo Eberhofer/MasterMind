@@ -4,21 +4,21 @@ from functools import reduce
 import numpy as np
 from collections import Counter
 
-def solver_brute_force(self):
-    s = np.array([''.join(c) for c in self.create_solution_generator()])
+def brute_force(game):
+    s = np.array([''.join(c) for c in game.create_solution_generator()])
     n = 0
     print('n {} and len(s) {}'.format(n,len(s)))
     while len(s) > 1:
-        trial = self.create_code(s)
-        result = self.evaluator(trial)
-        s = self.reduce_solution_set(s, trial, result)
+        trial = game.create_code(s)
+        result = game.evaluator(trial)
+        s = game.reduce_solution_set(s, trial, result)
         n += 1
         print('n {} and len(s) {} after trial {} with evaluation {}'.format(n,len(s), trial, result))
     if len(s) == 1:
         print(s[0])
-        if (s[0] == self.challenge):
-            return [self._colordict[s[0][i]] for i in self._slots], n
+        if (s[0] == game.challenge):
+            return [game._colordict[s[0][i]] for i in game._slots], n
         else:
-            return "Challenge {} has no solution - solver terminated after {} trials".format(self.challenge, n)
+            return "Challenge {} has no solution - solver terminated after {} trials".format(game.challenge, n)
     else:
-        return "Challenge {} has no solution - solver terminated after {} trials".format(self.challenge, n)
+        return "Challenge {} has no solution - solver terminated after {} trials".format(game.challenge, n)
