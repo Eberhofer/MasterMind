@@ -20,7 +20,10 @@ class Game:
         self._colorchars = 'abcdefghijklmnopqrstuvwxyz'[:len(self._colors)]
         charlist = [self._colorchars[i] for i in range(len(self._colors))]
         self._colordict = dict(zip(self._colorchars, self._colors))
-        self.challenge = self.create_code()
+        set_challenge()
+
+    def set_challenge(self,solution_set=None):
+        self.challenge = self.create_code(solution_set)
 
     def create_code(self,solution_set=None):
         if solution_set is None:
