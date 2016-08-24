@@ -26,7 +26,7 @@ def knuth(game):
             guess = codes[0]
         else:
             guess = min(ALL_CODES, key=key)
-    return [game._colordict[guess[i]] for i in game._slots], n
+    return [game.colordict[guess[i]] for i in game._slots], n
 
 
 

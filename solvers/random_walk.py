@@ -12,4 +12,4 @@ def random_walk(game):
         trial = game.create_code()
         #print(trial)
         n += 1
-    return trial, n
+    return  [game.colordict[trial[i]] for i in game._slots],, n

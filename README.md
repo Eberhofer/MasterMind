@@ -6,9 +6,11 @@ A project to explore MasterMind solution strategies. It already uses numpy, alth
 ## Games
 The code creates a game from the Game class in the top level of the hierarchy. It can be used as follows:
 
+```
 from game import Game
+```
 
-Games can then be created using a simple constructor call with the number of slots and the colors (as a space separated string). In the following, g is a classic MasterMind with 6 colors and 4 slots while h is a more exotic game with 5 slots and characters from OnePiece as colors. Please note that fancy colors are possible, but that they are represented as the first n lower case characters where n is the number of different colors. For h, n is 8.
+Games can then be created using a simple constructor call with the number of slots and the colors (as a space separated string). In the following, g is a classic MasterMind with 6 colors and 4 slots while h is a more exotic game with 5 slots and characters from OnePiece as colors. Please note that fancy colors are possible, but that they are represented as the first n lower case characters where n is the number of different colors. For h, n is 8. However, some solvers translate the solution back to the colors given using g.colordict.
 
 ```
 g=Game()
@@ -62,3 +64,6 @@ Note that the current implementation ofd the generator yields lists and the code
 
 ### g.reduce_solution_set(solution_set,guess,feedback)
 This method returns a numpy array  of possible solutions that remain in a given solution_set after guess received feedback. The method is essentially a comprehension calling g.evaluator for each element of solution_set.
+
+### g.colordict
+A python dictionary translating the letters into colors - this can be used to return a list of colors from the solver instead of a string of lower case letters.

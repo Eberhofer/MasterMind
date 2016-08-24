@@ -19,7 +19,7 @@ class Game:
             self._colors = set(colors.split(' '))
         self._colorchars = 'abcdefghijklmnopqrstuvwxyz'[:len(self._colors)]
         charlist = [self._colorchars[i] for i in range(len(self._colors))]
-        self._colordict = dict(zip(self._colorchars, self._colors))
+        self.colordict = dict(zip(self._colorchars, self._colors))
         set_challenge()
 
     def set_challenge(self,solution_set=None):

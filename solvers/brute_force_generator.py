@@ -25,6 +25,6 @@ def brute_force_generator(game):
     print(trials[-1][0])
     print(trials[-1][1][0])
     if trials[-1][1][0] == len(game._slots):
-        return [game._colordict[trial[i]] for i in game._slots], len(trials)
+        return [game.colordict[trial[i]] for i in game._slots], len(trials)
     else:
         return "Challenge {} has no solution - solver terminated after {} trials".format(game.challenge, len(trials))

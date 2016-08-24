@@ -17,7 +17,7 @@ def brute_force(game):
     if len(s) == 1:
         print(s[0])
         if (s[0] == game.challenge):
-            return [game._colordict[s[0][i]] for i in game._slots], n
+            return [game.colordict[s[0][i]] for i in game._slots], n
         else:
             return "Challenge {} has no solution - solver terminated after {} trials".format(game.challenge, n)
     else:
