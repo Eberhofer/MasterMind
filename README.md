@@ -1,7 +1,8 @@
 # MasterMind
 
 # Intro
-A project to explore MasterMind solution strategies. It already uses numpy, although at this stage, there is no measurable performance benefit over python lists - numpy is not essential and I may decide to throw it out again.
+A project to explore MasterMind solution strategies.
+note on the dependencies: The game module uses the standard library only. However, some of the solvers use numpy, although at this stage, there is no measurable performance benefit over python lists - numpy is not essential and I may decide to throw it out again. Other than that, just the standard library. Oh, and it's Python 3.5.2.
 
 ## Games
 The code creates a game from the Game class in the top level of the hierarchy. It can be used as follows:
@@ -39,16 +40,15 @@ from solvers.brute_force import brute_force
 
 The solvers can then be applied to a game as follows:
 
-
 ```
 knuth(g)
 brute_force(h)
 ```
 
-While MasterMind is probably **the** game for the beginning programmer and the literature on it is abundant, it is surprisingly difficult to come up with a canonical solver that scales well. Further, there are different notions of 'optimal'. knuth, for example, never needs more than 5 attempts for the classic MasterMind game. However, it's o(n2) and starts to fail quickly if the number of slots and/or colors is increased. In addition, generalizing the starting point ('aabb') is not trivial. brute_force, on the other hand, is very quick, gets the result usually in 5 guesses or less and scales reasonably well being o(n). However, it is very memory intensive and can take more than 5 guesses (I don't know what the worst case is) to arrive at the solution. brute_force_generator takes care of the memory issue, but in its current implementation (lexical order) frequently requires 9 or 10 guesses.
+While MasterMind is a very popular game for the beginning programmer and the literature on it is abundant, it is surprisingly difficult to come up with a canonical solver that scales well. Further, there does not appear to be one single best algortihm. Rather, there are different notions of 'optimal' dependent on preference. knuth, for example, never needs more than 5 attempts for the classic MasterMind game and is optimal from a worst case perspective. However, execution time explodes quickly if the number of slots and/or colors is increased. In addition, generalizing the starting point ('aabb') is not trivial. brute_force, on the other hand, is very quick, gets the result usually in 5 guesses or less and scales reasonably well being o(n). However, it is memory intensive and can take more than 5 guesses to arrive at the solution. brute_force_generator takes care of the memory issue, is about as fast brute_force on average, but in its current implementation (lexical order) frequently requires 9 or 10 guesses.
 
 ## create your own solvers
-The game class offers some helper methods to facilitate the creation of new solvers. That was the point of the project to begin with. The methods are (assuming a game g already constructed):
+The game class offers some methods to facilitate the creation of new solvers. That was the point of the project to begin with. The methods are (assuming a game g already constructed):
 
 ### g.create_code(optional solution_set)
 If called without arguments, this returns a random code for the game g. If a solution_set is given, the method chooses and returns a random element of that set. (Technically, it treats the solutionset as a list).
@@ -60,10 +60,10 @@ This method returns a generator yielding all possible solutions as lists. This i
 [''.join(solution) for solution in g.create_solution_generator]
 ```
 
-Note that the current implementation ofd the generator yields lists and the codes are just strings. "'.join(list)'" creates a string from each list.
+Note that the current implementation of the generator yields lists and the codes are just strings. "'.join(list)'" creates a string from each list.
 
 ### g.reduce_solution_set(solution_set,guess,feedback)
 This method returns a numpy array  of possible solutions that remain in a given solution_set after guess received feedback. The method is essentially a comprehension calling g.evaluator for each element of solution_set.
 
 ### g.colordict
-A python dictionary translating the letters into colors - this can be used to return a list of colors from the solver instead of a string of lower case letters.
+This is not a method but a python dictionary translating the letters into colors. It can be used to return a list of colors from the solver instead of a string of lower case letters.

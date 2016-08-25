@@ -1,12 +1,12 @@
 from random import sample, choice
 from itertools import product, combinations
 from functools import reduce
-import numpy as np
+#import numpy as np
 from collections import Counter
 
 class Game:
     _colors = set('red blue yellow green orange brown'.split(' '))
-    _slots = np.arange(4)
+    _slots = range(4)
 
     def _create_colordict(colorset):
         cn = 'abcdefghijklmnopqrstuvwxyz'[:len(colorset)]
@@ -14,13 +14,13 @@ class Game:
 
     def __init__(self, slots = None, colors = None):
         if slots is not None:
-            self._slots = np.arange(slots)
+            self._slots = range(slots)
         if colors is not None:
             self._colors = set(colors.split(' '))
         self._colorchars = 'abcdefghijklmnopqrstuvwxyz'[:len(self._colors)]
         charlist = [self._colorchars[i] for i in range(len(self._colors))]
         self.colordict = dict(zip(self._colorchars, self._colors))
-        set_challenge()
+        self.set_challenge()
 
     def set_challenge(self,solution_set=None):
         self.challenge = self.create_code(solution_set)
@@ -45,7 +45,7 @@ class Game:
         return product(self._colorchars, repeat=len(self._slots))
 
     def reduce_solution_set(self,solution_set,trial,result):
-        return np.array([i for i in solution_set if self.evaluator(i,trial) == result])
+        return [i for i in solution_set if self.evaluator(i,trial) == result]
 
     def binomial_coeff(n,k):
         if n<k:

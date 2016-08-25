@@ -1,7 +1,6 @@
 from random import sample, choice
 from itertools import product, combinations
 from functools import reduce
-import numpy as np
 from collections import Counter
 
 def brute_force_optimized(game):
@@ -23,7 +22,7 @@ def brute_force_optimized(game):
     if len(s) == 1:
         print(''.join(i for i in s[0]))
         if (''.join(i for i in s[0]) == game.challenge):
-            return [game._colordict[s[0][i]] for i in game._slots], n
+            return [game.colordict[s[0][i]] for i in game._slots], n
         else:
             return "Challenge {} has no solution - solver terminated after {} trials".format(game.challenge, n)
     else:
