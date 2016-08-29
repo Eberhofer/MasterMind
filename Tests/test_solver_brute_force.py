@@ -1,16 +1,10 @@
-import unittest
-
+import pytest
 from MasterMind.game import Game
 from MasterMind.solvers import brute_force
 
-class TestSolverBruteForce(unittest.TestCase):
+@pytest.fixture
+def g():
+    return Game()
 
-    def setUp(self):
-        self.game = Game()
-
-    def test_solution_is_correct(self):
-        self.assertEqual(brute_force.brute_force(self.game)[0],
-                        [self.game.colordict[self.game.challenge[i]] for i in self.game._slots])
-
-if __name__ == '__main__':
-    unittest.main()
+def test_solution_is_correct(g):
+    assert brute_force.brute_force(g)[0] == [g.colordict[g.challenge[i]] for i in g._slots]
