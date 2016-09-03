@@ -9,7 +9,8 @@ def knuth(game):
         adapted from http://stackoverflow.com/questions/20298190/mastermind-minimax-algorithm
         (see below for the code from stackoverflow)
     """
-    ALL_CODES = np.array([''.join(c) for c in game.create_solution_generator()])
+    sg = game.create_solution_generator()
+    ALL_CODES = np.array([''.join(c) for c in sg])
     assert(game.challenge in ALL_CODES)
     codes = ALL_CODES
     key = lambda g: max(Counter(game.evaluator(g, c) for c in codes).values())
@@ -21,11 +22,15 @@ def knuth(game):
         print("Guess {}: feedback {}".format(guess, feedback))
         if guess == game.challenge:
             break
-        codes = game.reduce_solution_set(codes, guess, feedback)
-        if len(codes) == 1:
+        print("start reducting")
+        codes = np.array([c for c in game.reduce_solution_set(codes, guess, feedback)])
+        print("done reducing")
+        if len([c for c in codes]) == 1:
             guess = codes[0]
         else:
+            print("start minmaxing")
             guess = min(ALL_CODES, key=key)
+            print("done minmaxing")
     return [game.colordict[guess[i]] for i in game._slots], n
 
 

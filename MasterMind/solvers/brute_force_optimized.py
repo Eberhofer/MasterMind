@@ -10,13 +10,13 @@ def brute_force_optimized(game):
     print('n {} and len(s) {}'.format(n,l))
     trial = ''.join(''.join('a' for _ in range(int(len(game._slots) / 2))) + ''.join('b' for _ in range(int((len(game._slots) +1)/2))))
     result = game.evaluator(trial)
-    s = game.reduce_solution_set(s, trial, result)
+    s = [c for c in game.reduce_solution_set(s, trial, result)]
     n += 1
     print('n {} and len(s) {} after trial {} with evaluation {}'.format(n,len(s), trial, game.evaluator(trial)))
     while len(s) > 1:
         trial = ''.join(i for i in game.create_code(s))
         result = game.evaluator(trial)
-        s = game.reduce_solution_set(s, trial, result)
+        s = [c for c in game.reduce_solution_set(s, trial, result)]
         n += 1
         print('n {} and len(s) {} after trial {} with evaluation {}'.format(n,len(s), trial, result))
     if len(s) == 1:
