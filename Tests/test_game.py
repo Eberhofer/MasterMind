@@ -1,6 +1,5 @@
 import pytest
 from MasterMind.game import Game
-from MasterMind.solvers import random_walk
 
 @pytest.fixture
 def g():

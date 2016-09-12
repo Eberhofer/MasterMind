@@ -22,15 +22,13 @@ def knuth(game):
         print("Guess {}: feedback {}".format(guess, feedback))
         if guess == game.challenge:
             break
-        print("start reducting")
         codes = np.array([c for c in game.reduce_solution_set(codes, guess, feedback)])
-        print("done reducing")
         if len([c for c in codes]) == 1:
             guess = codes[0]
         else:
-            print("start minmaxing")
+            # score = np.array([max(Counter(game.evaluator(g, c) for c in codes).values())
+            #             for g in ALL_CODES])
             guess = min(ALL_CODES, key=key)
-            print("done minmaxing")
     return [game.colordict[guess[i]] for i in game._slots], n
 
 
