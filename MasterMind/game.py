@@ -69,3 +69,8 @@ class Game:
         if type(n) != int or type(k) != int:
             raise ValueError('binomial_coeff(n,k) is only defined for integer n and k.')
         return int(factorial(n)/(factorial(k) * factorial(n-k)))
+
+    def create_feedback_dict(self):
+        gen1 = self.create_solution_generator()
+        gen2 = self.create_solution_generator()
+        return dict([((''.join(i),''.join(j)),self.evaluator(i,j)) for i, j in zip(gen1, gen2)])
