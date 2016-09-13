@@ -2,13 +2,13 @@
 
 # Intro
 A project to explore MasterMind solution strategies.
-note on the dependencies: The game module uses the standard library only. However, some of the solvers use numpy, although at this stage, there is no measurable performance benefit over python lists - numpy is not essential and I may decide to throw it out again. Other than that, just the standard library. Oh, and it's Python 3.5.2.
+note on the dependencies: The game module uses the standard library only. However, some of the solvers use numpy, although at this stage, there is no measurable performance benefit over python lists - numpy is not essential and I may decide to throw it out again. Other than that, just the standard library. Oh, and it's Python 3.5.2 but it should really work for any python 3 environment.
 
 ## Games
 The code creates a game from the Game class in the top level of the hierarchy. It can be used as follows:
 
 ```
-from game import Game
+from MasterMind.game import Game
 ```
 
 Games can then be created using a simple constructor call with the number of slots and the colors (as a space separated string). In the following, g is a classic MasterMind with 6 colors and 4 slots while h is a more exotic game with 5 slots and characters from OnePiece as colors. Please note that fancy colors are possible, but that they are represented as the first n lower case characters where n is the number of different colors. For h, n is 8. However, some solvers translate the solution back to the colors given using g.colordict.
@@ -34,8 +34,9 @@ For a new challenge code, use g.set_challenge().
 The more interesting aspect of the code is the set of algorithms to solve games. A number of solvers are provided and can be imported from the solvers folder:
 
 ```
-from solvers.knuth import knuth
-from solvers.brute_force import brute_force
+from MasterMind.solvers.knuth import knuth
+from MasterMind.solvers.brute_force import brute_force
+from MasterMind.solvers.brute_force_optimized import brute_force_optimized as bfo
 ```
 
 The solvers can then be applied to a game as follows:
@@ -43,9 +44,10 @@ The solvers can then be applied to a game as follows:
 ```
 knuth(g)
 brute_force(h)
+bfo(h)
 ```
 
-While MasterMind is a very popular game for the beginning programmer and the literature on it is abundant, it is surprisingly difficult to come up with a canonical solver that scales well. Further, there does not appear to be one single best algortihm. Rather, there are different notions of 'optimal' dependent on preference. knuth, for example, never needs more than 5 attempts for the classic MasterMind game and is optimal from a worst case perspective. However, execution time explodes quickly if the number of slots and/or colors is increased. In addition, generalizing the starting point ('aabb') is not trivial. brute_force, on the other hand, is very quick, gets the result usually in 5 guesses or less and scales reasonably well being o(n). However, it is memory intensive and can take more than 5 guesses to arrive at the solution. brute_force_generator takes care of the memory issue, is about as fast brute_force on average, but in its current implementation (lexical order) frequently requires 9 or 10 guesses.
+While MasterMind is a very popular game for the beginning programmer and the literature on it is abundant, it is surprisingly difficult to come up with a canonical solver that scales well. Further, there does not appear to be one single best algortihm. Rather, there are different notions of 'optimal' dependent on preference. knuth, for example, never needs more than 5 attempts for the classic MasterMind game and is optimal from a worst case perspective. However, execution time explodes quickly with O(n^2) if the number of slots and/or colors is increased. In addition, generalizing the starting point ('aabb') is not trivial. brute_force, on the other hand, is very quick, gets the result usually in 5 guesses or less and scales reasonably well being O(n). However, it is memory intensive and can take more than 5 guesses to arrive at the solution. brute_force_generator takes care of the memory issue, is about as fast brute_force on average, but in its current implementation (lexical order) frequently requires 9 or 10 guesses. brute_force_optimized alleviates the memory issue somewhat (by using a generator initially instead of a list) and appears to be optimal from a practical point of view. For example, it can solve 6-color MasterMind with 10 slots on a raspberry pi 3  in roughly two hours, while brute_force does not have enough memory for 9 slots and knuth already requires >20 minutes for 5 slots.
 
 ## create your own solvers
 The game class offers some methods to facilitate the creation of new solvers. That was the point of the project to begin with. The methods are (assuming a game g already constructed):
