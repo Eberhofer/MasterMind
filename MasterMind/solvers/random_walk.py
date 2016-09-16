@@ -1,15 +1,18 @@
-from random import sample, choice
-from itertools import product, combinations
-from functools import reduce
-import numpy as np
-from collections import Counter
-
+"""
+    A solver for the MasterMind game.
+"""
 
 def random_walk(game):
+    """
+        solves MasterMind by throwing out random codes.
+        On average takes about 5 time n guesses, where n
+        is the number of possible solutions of the Mastermind Game.
+        For 6**4, this means about 6000 guesses.
+    """
     trial = []
-    n = 0
+    i = 0
     while trial != game.challenge:
         trial = game.create_code()
         #print(trial)
-        n += 1
-    return  [game.colordict[trial[i]] for i in game._slots], n
+        i += 1
+    return  [game.colordict[trial[_]] for _ in game.get_slots()], i

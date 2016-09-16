@@ -76,7 +76,6 @@ This is not a method but a python dictionary translating the letters into colors
 ## General / studies
 http://mathworld.wolfram.com/Mastermind.html
 https://arxiv.org/pdf/1305.1010.pdf
-http://mercury.webster.edu/aleshunas/Support%20Materials/Analysis/Dowelll%20-%20Mastermind%20v2-0.pdf
 http://people.mpi-inf.mpg.de/~winzen/Mastermind.pdf
 http://www.philos.rug.nl/~barteld/master.pdf
 

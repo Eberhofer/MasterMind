@@ -77,6 +77,12 @@ class Game:
         white = blackandwhite - black
         return black, white
 
+    def get_slots(self):
+        """
+            returns the slots in self (a range).
+        """
+        return self._slots
+
 # aux methods for solvers
     def create_solution_generator(self):
         """
