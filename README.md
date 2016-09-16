@@ -1,8 +1,9 @@
 # MasterMind
 
 # Intro
-A project to explore MasterMind solution strategies.
-note on the dependencies: The game module uses the standard library only. However, some of the solvers use numpy, although at this stage, there is no measurable performance benefit over python lists - numpy is not essential and I may decide to throw it out again. Other than that, just the standard library. Oh, and it's Python 3.5.2 but it should really work for any python 3 environment.
+A project to explore (m,n) MasterMind solution strategies, where m is the number of slots and n is the number of colors. (4,6) MasterMind is the classic game. In the current state, the project only explores interactive strategies, but the code is prepared to handle static solutions as well and should support solution strategies for generic n and m.
+
+Note on the dependencies: The game module uses the standard library only. However, some of the solvers use numpy, although at this stage, there is no measurable performance benefit over python lists - numpy is not essential and I may decide to throw it out again. Other than that, just the standard library. Oh, and it's Python 3.5.2 but it should really work for any python 3 environment.
 
 ## Games
 The code creates a game from the Game class in the top level of the hierarchy. It can be used as follows:
@@ -11,7 +12,7 @@ The code creates a game from the Game class in the top level of the hierarchy. I
 from MasterMind.game import Game
 ```
 
-Games can then be created using a simple constructor call with the number of slots and the colors (as a space separated string). In the following, g is a classic MasterMind with 6 colors and 4 slots while h is a more exotic game with 5 slots and characters from OnePiece as colors. Please note that fancy colors are possible, but that they are represented as the first n lower case characters where n is the number of different colors. For h, n is 8. However, some solvers translate the solution back to the colors given using g.colordict.
+Games can then be created using a simple constructor call with the number of slots and the colors (as a space separated string). In the following, g is a classic (4,6) MasterMind with 6 colors and 4 slots while h is a more exotic (5,8) game with 5 slots and 8 characters from OnePiece as colors. Please note that fancy colors are possible, but that they are represented as the first n lower case characters where n is the number of different colors. The solvers do return the solution in the colors given using g.colordict.
 
 ```
 g=Game()
@@ -68,4 +69,21 @@ Note that the current implementation of the generator yields lists and the codes
 This method returns a numpy array  of possible solutions that remain in a given solution_set after guess received feedback. The method is essentially a comprehension calling g.evaluator for each element of solution_set.
 
 ### g.colordict
-This is not a method but a python dictionary translating the letters into colors. It can be used to return a list of colors from the solver instead of a string of lower case letters.
+This is not a method but a python dictionary translating the letters into colors. It can be used to return a list of colors from the solver instead of a string of lower case letters
+
+# Links
+
+## General / studies
+http://mathworld.wolfram.com/Mastermind.html
+https://arxiv.org/pdf/1305.1010.pdf
+http://mercury.webster.edu/aleshunas/Support%20Materials/Analysis/Dowelll%20-%20Mastermind%20v2-0.pdf
+http://people.mpi-inf.mpg.de/~winzen/Mastermind.pdf
+http://www.philos.rug.nl/~barteld/master.pdf
+
+## Implementations
+http://www.stoyanr.com/2012/09/masterminder-java-library-of-mastermind.html
+
+## Microimplementations
+https://mail.python.org/pipermail/python-list/2002-August/126236.html
+http://www.mystrobl.de/ws/pic/mm47/index.htm
+http://www.mystrobl.de/ws/pic/mm47/mm47bas.htm
