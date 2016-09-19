@@ -1,0 +1,292 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>API Documentation &#8212; MasterMind 0.5 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="MasterMind 0.5 documentation" href="index.html" />
+    <link rel="prev" title="Welcome to MasterMind’s documentation!" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="api-documentation">
+<span id="api"></span><h1>API Documentation<a class="headerlink" href="#api-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="the-game-class">
+<h2>The game class<a class="headerlink" href="#the-game-class" title="Permalink to this headline">¶</a></h2>
+<p>Apart from a little helper function <a class="reference internal" href="#binomial_coeff.binomial_coeff" title="binomial_coeff.binomial_coeff"><code class="xref py py-func docutils literal"><span class="pre">binomial_coeff.binomial_coeff()</span></code></a> in
+it&#8217;s own module, the main code is in <a class="reference internal" href="#game.Game" title="game.Game"><code class="xref py py-class docutils literal"><span class="pre">game.Game</span></code></a>. This class uses a set
+of <a class="reference internal" href="#constants">constants</a>.</p>
+<span class="target" id="module-game"></span><div class="section" id="game-py-module">
+<h3>game.py module<a class="headerlink" href="#game-py-module" title="Permalink to this headline">¶</a></h3>
+<p>game.py defines the MasterMind Game class.</p>
+<dl class="class">
+<dt id="game.Game">
+<em class="property">class </em><code class="descclassname">game.</code><code class="descname">Game</code><span class="sig-paren">(</span><em>slots=None</em>, <em>colors=None</em><span class="sig-paren">)</span><a class="headerlink" href="#game.Game" title="Permalink to this definition">¶</a></dt>
+<dd><p>The Game class provides MasterMind game class and methods
+that can be used by various testing strategies.</p>
+<dl class="attribute">
+<dt id="game.Game.colordict">
+<code class="descname">colordict</code><a class="headerlink" href="#game.Game.colordict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the colordict in self (a range).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="game.Game.create_code">
+<code class="descname">create_code</code><span class="sig-paren">(</span><em>solution_set=None</em><span class="sig-paren">)</span><a class="headerlink" href="#game.Game.create_code" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates and returns a random code from a solution_set.
+By default the unrestricted set is used.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="game.Game.create_solution_generator">
+<code class="descname">create_solution_generator</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#game.Game.create_solution_generator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a generator for all solutions of self.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="game.Game.evaluator">
+<code class="descname">evaluator</code><span class="sig-paren">(</span><em>trial</em>, <em>benchmark=None</em><span class="sig-paren">)</span><a class="headerlink" href="#game.Game.evaluator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the evaluation of a trial vs a benchmark.
+self.challenge is used as default benchmark.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="game.Game.reduce_solution_set">
+<code class="descname">reduce_solution_set</code><span class="sig-paren">(</span><em>solution_set</em>, <em>trial</em>, <em>evaluation</em><span class="sig-paren">)</span><a class="headerlink" href="#game.Game.reduce_solution_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a generator for all solutions in solution_set that
+are still possible based on trial and its evaluation.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="game.Game.set_challenge">
+<code class="descname">set_challenge</code><span class="sig-paren">(</span><em>solution_set=None</em><span class="sig-paren">)</span><a class="headerlink" href="#game.Game.set_challenge" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the challenge property with the possibility
+to restrict the codes to a custom solution_set.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="game.Game.slots">
+<code class="descname">slots</code><a class="headerlink" href="#game.Game.slots" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the slots in self (a range).</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<span class="target" id="module-binomial_coeff"></span><div class="section" id="binomial-coeff-py-module">
+<h3>binomial_coeff.py module<a class="headerlink" href="#binomial-coeff-py-module" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="binomial_coeff.binomial_coeff">
+<code class="descclassname">binomial_coeff.</code><code class="descname">binomial_coeff</code><span class="sig-paren">(</span><em>degree</em>, <em>coefficient</em><span class="sig-paren">)</span><a class="headerlink" href="#binomial_coeff.binomial_coeff" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the binomial coefficient n choose k.
+n is the degree of the factorial and k the degree.</p>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="module-solvers.knuth">
+<span id="solvers"></span><span id="api-solvers"></span><h2>Solvers<a class="headerlink" href="#module-solvers.knuth" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="knuth-s-algorithm-simplified">
+<h3>Knuth&#8217;s algorithm (simplified)<a class="headerlink" href="#knuth-s-algorithm-simplified" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="solvers.knuth.knuth">
+<code class="descclassname">solvers.knuth.</code><code class="descname">knuth</code><span class="sig-paren">(</span><em>game</em><span class="sig-paren">)</span><a class="headerlink" href="#solvers.knuth.knuth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run Knuth&#8217;s 5-guess algorithm on the given secret.
+adapted from
+<a class="reference external" href="http://stackoverflow.com/questions/20298190/mastermind-minimax-algorithm">http://stackoverflow.com/questions/20298190/mastermind-minimax-algorithm</a>
+(see below for the code from stackoverflow)</p>
+<p>The code is simplified in the way it treats ties in the minmax function.
+Instead of going to the next level to resolve ties, we simply take the
+first code that fulfills the minmax condition.</p>
+<p>Returns the solution translated back into the game colors.</p>
+</dd></dl>
+
+</div>
+<span class="target" id="module-solvers.brute_force"></span><div class="section" id="brute-force">
+<h3>Brute force<a class="headerlink" href="#brute-force" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="solvers.brute_force.brute_force">
+<code class="descclassname">solvers.brute_force.</code><code class="descname">brute_force</code><span class="sig-paren">(</span><em>game</em><span class="sig-paren">)</span><a class="headerlink" href="#solvers.brute_force.brute_force" title="Permalink to this definition">¶</a></dt>
+<dd><p>Solves MasterMind by running through generators.
+This saves memory but is dumb in the sense that it returns
+through possible solutions in lexical order.</p>
+<p>Returns the solution translated back into the game colors.</p>
+</dd></dl>
+
+</div>
+<span class="target" id="module-solvers.brute_force_optimized"></span><div class="section" id="brute-force-optimized">
+<h3>Brute force optimized<a class="headerlink" href="#brute-force-optimized" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="solvers.brute_force_optimized.brute_force_optimized">
+<code class="descclassname">solvers.brute_force_optimized.</code><code class="descname">brute_force_optimized</code><span class="sig-paren">(</span><em>game</em><span class="sig-paren">)</span><a class="headerlink" href="#solvers.brute_force_optimized.brute_force_optimized" title="Permalink to this definition">¶</a></dt>
+<dd><p>Solves MasterMind by running through generators.
+This saves memory but is dumb in the sense that it returns
+through possible solutions in lexical order.
+Returns the solution translated back into the game colors.</p>
+</dd></dl>
+
+</div>
+<span class="target" id="module-solvers.brute_force_generator"></span><div class="section" id="brute-force-generator">
+<h3>Brute force generator<a class="headerlink" href="#brute-force-generator" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="solvers.brute_force_generator.brute_force_generator">
+<code class="descclassname">solvers.brute_force_generator.</code><code class="descname">brute_force_generator</code><span class="sig-paren">(</span><em>game</em><span class="sig-paren">)</span><a class="headerlink" href="#solvers.brute_force_generator.brute_force_generator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Solves MasterMind by running through generators.
+This saves memory but is dumb in the sense that it returns
+through possible solutions in lexical order.</p>
+<p>Returns the solution translated back into the game colors.</p>
+</dd></dl>
+
+</div>
+<span class="target" id="module-solvers.generator"></span><div class="section" id="generator">
+<h3>Generator<a class="headerlink" href="#generator" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="solvers.generator.generator">
+<code class="descclassname">solvers.generator.</code><code class="descname">generator</code><span class="sig-paren">(</span><em>game</em><span class="sig-paren">)</span><a class="headerlink" href="#solvers.generator.generator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Solves MasterMind by running through generators.
+This saves memory but is dumb in the sense that it returns
+through possible solutions in lexical order.</p>
+<p>Returns the solution translated back into the game colors.</p>
+</dd></dl>
+
+</div>
+<span class="target" id="module-solvers.random_walk"></span><div class="section" id="random-walk">
+<h3>Random walk<a class="headerlink" href="#random-walk" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="solvers.random_walk.random_walk">
+<code class="descclassname">solvers.random_walk.</code><code class="descname">random_walk</code><span class="sig-paren">(</span><em>game</em><span class="sig-paren">)</span><a class="headerlink" href="#solvers.random_walk.random_walk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Solves MasterMind by throwing out random codes.
+On average takes about 5 time n guesses, where n
+is the number of possible solutions of the Mastermind Game.
+For 6<sup>4</sup>, this means about 6000 guesses.</p>
+<p>Returns the solution translated back into the game colors.</p>
+</dd></dl>
+
+</div>
+<span class="target" id="module-solvers.knuth2"></span><div class="section" id="knuth-s-algorithm-faster-work-in-progress">
+<h3>Knuth&#8217;s algorithm faster (work in progress...)<a class="headerlink" href="#knuth-s-algorithm-faster-work-in-progress" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="solvers.knuth2.knuth">
+<code class="descclassname">solvers.knuth2.</code><code class="descname">knuth</code><span class="sig-paren">(</span><em>game</em><span class="sig-paren">)</span><a class="headerlink" href="#solvers.knuth2.knuth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run Knuth&#8217;s 5-guess algorithm on the given secret.
+adapted from
+<a class="reference external" href="http://stackoverflow.com/questions/20298190/mastermind-minimax-algorithm">http://stackoverflow.com/questions/20298190/mastermind-minimax-algorithm</a>
+(see below for the code from stackoverflow)</p>
+<p>Returns the solution translated back into the game colors.</p>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="constants">
+<span id="id1"></span><h2>Constants<a class="headerlink" href="#constants" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="#game.Game" title="game.Game"><code class="xref py py-class docutils literal"><span class="pre">game.Game</span></code></a> uses the literal string &#8216;abcdefghijklmnopqrstuvwxyz&#8217; as
+potential keys for the <a class="reference internal" href="#game.Game.colordict" title="game.Game.colordict"><code class="xref py py-meth docutils literal"><span class="pre">game.Game.colordict()</span></code></a> for translating the codes
+back to colors.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">API Documentation</a><ul>
+<li><a class="reference internal" href="#the-game-class">The game class</a><ul>
+<li><a class="reference internal" href="#game-py-module">game.py module</a></li>
+<li><a class="reference internal" href="#binomial-coeff-py-module">binomial_coeff.py module</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-solvers.knuth">Solvers</a><ul>
+<li><a class="reference internal" href="#knuth-s-algorithm-simplified">Knuth&#8217;s algorithm (simplified)</a></li>
+<li><a class="reference internal" href="#brute-force">Brute force</a></li>
+<li><a class="reference internal" href="#brute-force-optimized">Brute force optimized</a></li>
+<li><a class="reference internal" href="#brute-force-generator">Brute force generator</a></li>
+<li><a class="reference internal" href="#generator">Generator</a></li>
+<li><a class="reference internal" href="#random-walk">Random walk</a></li>
+<li><a class="reference internal" href="#knuth-s-algorithm-faster-work-in-progress">Knuth&#8217;s algorithm faster (work in progress...)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#constants">Constants</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Welcome to MasterMind&#8217;s documentation!</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/api.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, Peter Boschung.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="_sources/api.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

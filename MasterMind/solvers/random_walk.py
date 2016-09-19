@@ -1,13 +1,16 @@
 """
-    A solver for the MasterMind game.
+    Random walk
+    -----------
 """
 
 def random_walk(game):
     """
-        solves MasterMind by throwing out random codes.
+        Solves MasterMind by throwing out random codes.
         On average takes about 5 time n guesses, where n
         is the number of possible solutions of the Mastermind Game.
-        For 6**4, this means about 6000 guesses.
+        For 6\ :sup:`4`, this means about 6000 guesses.
+
+        Returns the solution translated back into the game colors.
     """
     trial = []
     i = 0
@@ -15,4 +18,4 @@ def random_walk(game):
         trial = game.create_code()
         #print(trial)
         i += 1
-    return  [game.colordict[trial[_]] for _ in game.get_slots()], i
+    return  [game.colordict[trial[_]] for _ in game.slots], i

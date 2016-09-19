@@ -1,5 +1,6 @@
 """
-    A solver for the MasterMind game.
+    Knuth's algorithm faster (work in progress...)
+    ----------------------------------------------
 """
 from collections import Counter
 import numpy as np
@@ -10,6 +11,8 @@ def knuth(game):
         adapted from
         http://stackoverflow.com/questions/20298190/mastermind-minimax-algorithm
         (see below for the code from stackoverflow)
+
+        Returns the solution translated back into the game colors.
     """
     # fd = game.create_feedback_dict()
 
@@ -17,7 +20,7 @@ def knuth(game):
     _all_codes = np.array([''.join(_) for _ in solutions])
     codes = _all_codes
     key = lambda g: max(Counter(game.evaluator(g, _) for _ in codes).values())
-    n_slots = len(game.get_slots())
+    n_slots = len(game.slots)
     guess = ''.join(''.join('a' for _ in range(int(n_slots / 2))) +
                     ''.join('b' for _ in range(int((n_slots +1)/2))))
     i = 0
@@ -34,4 +37,4 @@ def knuth(game):
             # score = np.array([max(Counter(game.evaluator(g, c) for c in codes).values())
             #             for g in ALL_CODES])
             guess = min(_all_codes, key=key)
-    return [game.colordict[guess[_]] for _ in game.get_slots()], i
+    return [game.colordict[guess[_]] for _ in game.slots], i

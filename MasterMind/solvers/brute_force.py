@@ -1,13 +1,16 @@
 """
-    A solver for the MasterMind game.
+    Brute force
+    -----------
 """
 import numpy as np
 
 def brute_force(game):
     """
-        solves MasterMind by running through generators.
+        Solves MasterMind by running through generators.
         This saves memory but is dumb in the sense that it returns
         through possible solutions in lexical order.
+
+        Returns the solution translated back into the game colors.
     """
     solutions = np.array([''.join(c) for c in game.create_solution_generator()])
     i = 0
@@ -22,7 +25,7 @@ def brute_force(game):
     if solutions.size == 1:
         print(solutions[0])
         if solutions[0] == game.challenge:
-            return [game.colordict[solutions[0][_]] for _ in game.get_slots()], i
+            return [game.colordict[solutions[0][_]] for _ in game.slots], i
         else:
             return 'Challenge {} has no solution - solver terminated ' \
                     'after {} trials'.format(game.challenge, i)

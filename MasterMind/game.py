@@ -1,5 +1,9 @@
 """
+    game.py module
+    --------------
+
     game.py defines the MasterMind Game class.
+
 """
 from random import choice
 from itertools import product
@@ -13,9 +17,23 @@ class Game:
     _colors = set('red blue yellow green orange brown'.split(' '))
     _slots = range(4)
 
+    @property
+    def slots(self):
+        """
+            Returns the slots in self (a range).
+        """
+        return self._slots
+
+    @property
+    def colordict(self):
+        """
+            Returns the colordict in self (a range).
+        """
+        return self._colordict
+
     def _create_colordict(self):
         """
-            creates a dict of chars to available colors
+            Creates and returns a dict of chars to available colors
 
             >>> sorted(Game()._create_colordict('vwxyz',
                 {'magenta', 'coral', 'peach', 'navy', 'maroon'}).keys())
@@ -44,7 +62,7 @@ class Game:
         if colors is not None:
             self._colors = set(colors.split(' '))
         self._colorchars = 'abcdefghijklmnopqrstuvwxyz'[:len(self._colors)]
-        self.colordict = self._create_colordict()
+        self._colordict = self._create_colordict()
         self.set_challenge()
 
     def set_challenge(self, solution_set=None):
@@ -56,7 +74,7 @@ class Game:
 
     def create_code(self, solution_set=None):
         """
-            Creates a random code from a solution_set.
+            Creates and returns a random code from a solution_set.
             By default the unrestricted set is used.
         """
         if solution_set is None:
@@ -77,32 +95,26 @@ class Game:
         white = blackandwhite - black
         return black, white
 
-    def get_slots(self):
-        """
-            returns the slots in self (a range).
-        """
-        return self._slots
-
 # aux methods for solvers
     def create_solution_generator(self):
         """
-            returns a generator for all solutions of self.
+            Returns a generator for all solutions of self.
         """
         return product(self._colorchars, repeat=len(self._slots))
 
     def reduce_solution_set(self, solution_set, trial, evaluation):
         """
-            returns a generator for all solutions in solution_set that
+            Returns a generator for all solutions in solution_set that
             are still possible based on trial and its evaluation.
         """
         yield from (i for i in solution_set
                     if self.evaluator(i, trial) == evaluation)
 
-    def create_feedback_dict(self):
-        """
-            returns a dict containing tuples of two codes as key and their
-            evalution as value.
-        """
-        gen1 = self.create_solution_generator()
-        gen2 = self.create_solution_generator()
-        return dict([((''.join(i), ''.join(j)), self.evaluator(i, j)) for i, j in zip(gen1, gen2)])
+    # def create_feedback_dict(self):
+    #     """
+    #         Returns a dict containing tuples of two codes as key and their
+    #         evalution as value. WORK N PROGRESS - STILL CREATES NONSENSE!!
+    #     """
+    #     gen1 = self.create_solution_generator()
+    #     gen2 = self.create_solution_generator()
+    #     return dict([((''.join(i), ''.join(j)), self.evaluator(i, j)) for i, j in zip(gen1, gen2)])

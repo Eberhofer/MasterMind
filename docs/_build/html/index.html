@@ -1,0 +1,194 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Welcome to MasterMind’s documentation! &#8212; MasterMind 0.5 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="MasterMind 0.5 documentation" href="#" />
+    <link rel="next" title="API Documentation" href="api.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="welcome-to-mastermind-s-documentation">
+<h1>Welcome to MasterMind&#8217;s documentation!<a class="headerlink" href="#welcome-to-mastermind-s-documentation" title="Permalink to this headline">¶</a></h1>
+<p>A project to explore n<sup>m</sup> MasterMind <a class="reference internal" href="#solution-strategies">solution strategies</a>, where m is
+the number of slots and n is the number of colors. The 6<sup>4</sup> MasterMind is
+the classic game. In the current state, the project only explores interactive
+strategies, but the code is prepared to handle static solutions as well and
+should support solution strategies for generic n and m.</p>
+<p>Note on the dependencies: The game module uses the standard library only.
+However, some of the solvers use numpy, although at this stage, there is no
+measurable performance benefit over python lists - numpy is not essential and
+I may decide to throw it out again. Other than that, just the standard library.
+Oh, and it&#8217;s Python 3.5.2 but it should really work for any Python 3 environment.</p>
+<p>This project is an exploration into solving strategies for MasterMind.
+It&#8217;s core is the <a class="reference internal" href="api.html#game.Game" title="game.Game"><code class="xref py py-class docutils literal"><span class="pre">game.Game</span></code></a> class, which defines a n<sup>m</sup> Mastermind game
+with m slots and n colors and provides certain methods to assist writing
+solution strategies.</p>
+<div class="section" id="simple-use">
+<h2>Simple use<a class="headerlink" href="#simple-use" title="Permalink to this headline">¶</a></h2>
+<p>For the impatient: here&#8217;s a quick overview of how to use this project. Normally,
+all you have to do is import and run, like this:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">MasterMind.game</span> <span class="k">import</span> <span class="n">Game</span>
+<span class="n">g</span><span class="o">=</span><span class="n">Game</span><span class="p">()</span>
+<span class="n">h</span><span class="o">=</span><span class="n">Game</span><span class="p">(</span><span class="n">slots</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">colors</span><span class="o">=</span><span class="s1">&#39;Ruffy Nami Sanji Zorro Robin Frankie Lysop Trafalgar&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This will generate a 6<sup>4</sup> game g and a 8<sup>5</sup> game h with a challenge
+code each and with the corresponding methods and properties.</p>
+<p>For more information about how to use this library, see the <a class="reference internal" href="api.html#api"><span class="std std-ref">API Documentation</span></a>.</p>
+</div>
+<div class="section" id="how-it-works">
+<h2>How it works<a class="headerlink" href="#how-it-works" title="Permalink to this headline">¶</a></h2>
+<p>MasterMind is essentially a finite code breaking game and each strategy needs
+to know the game&#8217;s properties and an evaluator plus some convenience methods and
+properties to generate solutions or translate codes to colors.
+The game can be played on the console:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="ow">in</span><span class="p">:</span> <span class="n">g</span><span class="o">.</span><span class="n">evaluator</span><span class="p">(</span><span class="s1">&#39;abcd&#39;</span><span class="p">)</span>
+<span class="n">out</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="ow">in</span><span class="p">:</span> <span class="n">h</span><span class="o">.</span><span class="n">evaluator</span><span class="p">(</span><span class="s1">&#39;abcde&#39;</span><span class="p">)</span>
+<span class="n">out</span><span class="p">:</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="solution-strategies">
+<h2>Solution strategies<a class="headerlink" href="#solution-strategies" title="Permalink to this headline">¶</a></h2>
+<p>The folder <a class="reference internal" href="api.html#api-solvers"><span class="std std-ref">solvers</span></a> contains a number of strategies to solve
+MasterMind. It&#8217;s actually an invitation to improve upon them and to suggest or
+try new strategies. My goal was to be general both in the <a class="reference internal" href="api.html#game.Game" title="game.Game"><code class="xref py py-class docutils literal"><span class="pre">game.Game</span></code></a>
+class and in the <a class="reference internal" href="api.html#api-solvers"><span class="std std-ref">solvers</span></a>. Each <a class="reference internal" href="api.html#api-solvers"><span class="std std-ref">solver</span></a> takes an instantiated
+game as argument and finds the solution for it. <a class="reference internal" href="api.html#api-solvers"><span class="std std-ref">Solvers</span></a> can also be written for
+what&#8217;s known as static MasterMind. In static MasterMind, the codebreaker tries
+to provide (in one go) a set of guesses that, together with the evaluations,
+will allow her to break the code in the next guess.</p>
+</div>
+<div class="section" id="literature">
+<h2>Literature<a class="headerlink" href="#literature" title="Permalink to this headline">¶</a></h2>
+<p>There is a lot of literature on the game and I only want to present some pointers:
+Wikipedia has a great entry for MasterMind:
+<a class="reference external" href="https://en.wikipedia.org/wiki/Mastermind_(board_game)">Mastermind (board game)</a>.
+This paper provides a good overview over the scholarly literature:
+<a class="reference external" href="http://people.mpi-inf.mpg.de/~winzen/Mastermind.pdf">Playing Mastermind with Many Colors</a>.</p>
+</div>
+<div class="section" id="tests">
+<h2>Tests<a class="headerlink" href="#tests" title="Permalink to this headline">¶</a></h2>
+<p>There are doctests and unit tests written in pytests to cover most of the
+<a class="reference internal" href="api.html#game.Game" title="game.Game"><code class="xref py py-class docutils literal"><span class="pre">game.Game</span></code></a> class and some <a class="reference internal" href="api.html#api-solvers"><span class="std std-ref">solvers</span></a>. Tests are not
+comprehensive, though.</p>
+<p>Contents:</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api.html#the-game-class">The game class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-solvers.knuth">Solvers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#constants">Constants</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
+<li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
+<li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Welcome to MasterMind&#8217;s documentation!</a><ul>
+<li><a class="reference internal" href="#simple-use">Simple use</a></li>
+<li><a class="reference internal" href="#how-it-works">How it works</a></li>
+<li><a class="reference internal" href="#solution-strategies">Solution strategies</a></li>
+<li><a class="reference internal" href="#literature">Literature</a></li>
+<li><a class="reference internal" href="#tests">Tests</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+      <li>Next: <a href="api.html" title="next chapter">API Documentation</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, Peter Boschung.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="_sources/index.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

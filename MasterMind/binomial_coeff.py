@@ -1,11 +1,12 @@
 """
-    returns the binomial coefficient n choose k.
+    binomial_coeff.py module
+    ------------------------
 """
 from math import factorial
 
 def binomial_coeff(degree, coefficient):
     """
-        returns the binomial coefficient n choose k.
+        Returns the binomial coefficient n choose k.
         n is the degree of the factorial and k the degree.
     """
     if degree < coefficient:
